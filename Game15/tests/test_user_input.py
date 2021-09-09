@@ -1,8 +1,8 @@
 
 import contextlib
 
-from homework3 import game
-from homework3.game import handle_user_input
+import game
+from game import handle_user_input
 
 
 @contextlib.contextmanager
@@ -12,7 +12,7 @@ def _patch_user_input(obj, value):
     since I didn't want to install a mocking library just
     for this task.
     """
-    obj.input = lambda _: value
+    obj.get_char = lambda: value.encode()
 
     yield
 
