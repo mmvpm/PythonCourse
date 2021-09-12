@@ -1,3 +1,4 @@
+import abc
 import random
 from typing import final
 
@@ -74,6 +75,8 @@ class Deck(object):
 class AbstractCombination():
     """Represents a combination in poker."""
 
+    __metaclass__ = abc.ABCMeta
+
     def __init__(self, cards):
         self._cards = cards
 
@@ -92,6 +95,7 @@ class AbstractCombination():
 
     @classmethod
     def from_cards(cls, cards):
+        """Creates a combination from cards."""
         if len(cards) != 5:
             raise ValueError('len(cards) should be 5')
         cards = sorted(cards, reverse=True)
@@ -101,8 +105,9 @@ class AbstractCombination():
         return None
 
     @classmethod
+    @abc.abstractmethod
     def _find_cards(cls, cards):
-        raise NotImplementedError('This method')
+        """Finds a combination in cards."""
 
 
 @final
