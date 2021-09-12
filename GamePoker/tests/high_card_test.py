@@ -1,6 +1,3 @@
-import sys
-sys.path.append('C:\\Users\\Xiaomi\\Desktop\\Projects\\Python\\PythonCourse\\GamePoker')
-
 from poker import HighCard
 from test_data import *
 
