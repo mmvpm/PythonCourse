@@ -1,4 +1,4 @@
-class ContractError(Excepetion):
+class ContractError(Exception):
     """We use this error when someone breaks our contract."""
 
 
