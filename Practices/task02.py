@@ -29,19 +29,3 @@ class Array(object):
 
     def __iter__(self):
         return iter(self._data)
-
-a = Array(1, 2)
-a.append(6)
-print(a)
-c = a + Array(3, 4)
-
-print(c)
-print(len(c))
-print(c.index(6))
-print(c.index(7))
-print(c[1])
-print(c[-1])
-# print(c[10]) # error
-print('c = ')
-for i in c:
-    print(i)
