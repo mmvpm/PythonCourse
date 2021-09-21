@@ -1,10 +1,9 @@
-
-from homework3.game import shuffle_field
+from game import FIELD_SIZE, shuffle_field
 
 
 def test_length():
     result = shuffle_field()
-    assert len(result) == 16
+    assert len(result) == FIELD_SIZE ** 2
 
 
 def test_randomness():
