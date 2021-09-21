@@ -69,7 +69,9 @@ def is_game_finished(field):
     :param field: current field state.
     :return: True if the game is finished, False otherwise.
     """
-    return field == list(range(1, FIELD_SIZE ** 2)) + [EMPTY_MARK]
+    initial_field = list(range(1, FIELD_SIZE ** 2))
+    initial_field.append(EMPTY_MARK)
+    return field == initial_field
 
 
 def perform_move(field, key):
@@ -93,6 +95,8 @@ def perform_move(field, key):
         field[current_index], field[target_index] = \
             field[target_index], field[current_index]
         return field
+    else:
+        return None
 
 
 def handle_user_input():
@@ -110,10 +114,10 @@ def handle_user_input():
     try:
         # waits for only one symbol from keyboard
         move = get_char().decode('utf-8')
-    except:
+    except Exception as _:
         return None
     
-    if move in 'wasd':
+    if move in MOVES.keys():
         return move
     elif move == '\x03': # Ctrl+C
         return EXIT_EVENT
