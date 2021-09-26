@@ -45,9 +45,9 @@ class Deck(object):
 
     def __init__(self):
         self._cards = [
-            Card(rank, suit) \
-                for suit in SUIT_NAMES \
-                    for rank in RANK_NAMES
+            Card(rank, suit)
+            for suit in SUIT_NAMES
+            for rank in RANK_NAMES
         ]
 
     def __str__(self):
@@ -73,10 +73,8 @@ class Deck(object):
             hand.add_card(self.pop_card())
 
 
-class AbstractCombination():
+class AbstractCombination(object, metaclass=abc.ABCMeta):
     """Represents a combination in poker."""
-
-    __metaclass__ = abc.ABCMeta
 
     def __init__(self, cards):
         self._cards = cards
@@ -125,6 +123,7 @@ class Pair(AbstractCombination):
         for i in range(len(cards) - 1):
             if cards[i] == cards[i + 1]:
                 return (cards[i], cards[i + 1])
+        return None
 
 
 @final
@@ -139,6 +138,7 @@ class DoublePair(AbstractCombination):
                 i += 1
         if len(result) >= 4:
             return result[:4]
+        return None
 
 
 @final
@@ -148,6 +148,7 @@ class Triplet(AbstractCombination):
         for i in range(len(cards) - 2):
             if cards[i] == cards[i + 1] == cards[i + 2]:
                 return (cards[i], cards[i + 1], cards[i + 2])
+        return None
 
 
 @final
@@ -173,6 +174,7 @@ class Flush(AbstractCombination):
         suits = list(map(lambda card: card.suit, cards))
         if suits.count(suits[0]) == len(suits):
             return cards
+        return None
 
 
 @final
@@ -183,6 +185,7 @@ class FullHouse(AbstractCombination):
         # => 2 options for full hause: [2, 2, 3, 3, 3] or [3, 3, 3, 2, 2]
         if (a == b == c and d == e) or (a == b and c == d == e):
             return cards
+        return None
 
 
 @final
@@ -194,6 +197,7 @@ class Quads(AbstractCombination):
             return (a, b, c, d)
         if b == c == d == e:
             return (b, c, d, e)
+        return None
 
 
 @final
@@ -204,6 +208,7 @@ class StraightFlush(AbstractCombination):
         straight = Straight.from_cards(cards)
         if flush is not None and straight is not None:
             return cards
+        return None
 
 
 @final
@@ -213,6 +218,7 @@ class RoyalFlush(AbstractCombination):
         straight_flush = StraightFlush.from_cards(cards)
         if straight_flush is not None and cards[0].rank == 'Ace':
             return cards
+        return None
 
 
 # Combinations in descending order
