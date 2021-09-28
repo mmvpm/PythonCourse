@@ -1,4 +1,4 @@
-class Storage(object):  # storage = Storge()
+class Storage(object):  # storage = Storage()
     """
     Singleton storage.
 
