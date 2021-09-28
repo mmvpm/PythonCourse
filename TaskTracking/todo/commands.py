@@ -73,3 +73,37 @@ class ExitCommand(BaseCommand):
 
     def perform(self, _store):
         raise UserExitException('See you next time!')
+
+
+class DoneCommand(BaseCommand):
+    label = 'done'
+
+    def perform(self, store):
+        print('Select item to mark it as done:')
+        for index, item in enumerate(store.items):
+            print(f'{index}: {item}')
+        
+        selection = int(input('Input number: '))
+        if selection < 0:
+            raise IndexError('Index needs to be >= 0')
+        elif selection >= len(store.items):
+            raise IndexError('Index needs to be < number of tasks')
+        
+        store.items[selection].done = True
+
+
+class UndoneCommand(BaseCommand):
+    label = 'undone'
+
+    def perform(self, store):
+        print('Select item to mark it as undone:')
+        for index, item in enumerate(store.items):
+            print(f'{index}: {item}')
+        
+        selection = int(input('Input number: '))
+        if selection < 0:
+            raise IndexError('Index needs to be >= 0')
+        elif selection >= len(store.items):
+            raise IndexError('Index needs to be < number of tasks')
+        
+        store.items[selection].done = False
