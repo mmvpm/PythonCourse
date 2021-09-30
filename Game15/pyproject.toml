@@ -6,6 +6,8 @@ authors = ["IdeaSeeker <stroganov.n.36@gmail.com>"]
 
 [tool.poetry.dependencies]
 python = "^3.9"
+wemake-python-styleguide = "^0.15.3"
+safety = "^1.10.3"
 
 [tool.poetry.dev-dependencies]
 
