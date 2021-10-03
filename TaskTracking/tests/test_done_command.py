@@ -14,7 +14,8 @@ def test_command_label_in_list():
 def test_command_execution(monkeypatch):
     from todo.commands import DoneCommand
     from todo.runtime import perform_command
-    from todo.models import Storage, ToDoItem
+    from todo.models import ToDoItem
+    from todo.storage import Storage
 
     monkeypatch.setitem(__builtins__, 'input', lambda _: 0)
 
