@@ -58,18 +58,15 @@ def contract(arg_types=None, return_type=None, raises=None):
             else:
                 result = code()
             
-            actual_return_type = type(result)
-            return result, actual_return_type
+            return result, type(result)
 
-        def wrapper(*args, **kwargs):
-            actual_args = args + tuple(kwargs.values())
-            actual_arg_types = tuple(map(type, actual_args))
+        def wrapper(*args):
+            actual_arg_types = tuple(map(type, args))
             validate_arg_types(actual_arg_types)
             
-            lazy_function = lambda: function(*args, **kwargs)
-            result, actual_return_type = validate_raises(lazy_function)
-
+            result, actual_return_type = validate_raises(lambda: function(*args))
             validate_return_type(actual_return_type)
+            
             return result
         
         return wrapper
