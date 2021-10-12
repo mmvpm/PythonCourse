@@ -1,0 +1,21 @@
+[tool.poetry]
+name = "my-awesome-script"
+version = "0.1.0"
+description = "Simple console application"
+authors = ["IdeaSeeker <stroganov.n.36@gmail.com>"]
+
+[tool.poetry.dependencies]
+python = "^3.9"
+Pygments = "^2.10.0"
+cowpy = "^1.1.0"
+pytz = "^2021.3"
+argparse = "^1.4.0"
+
+[tool.poetry.dev-dependencies]
+wemake-python-styleguide = "^0.15.3"
+flake8 = "^3.7"
+safety = "^1.10.3"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
