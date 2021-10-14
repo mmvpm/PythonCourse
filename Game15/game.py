@@ -5,28 +5,37 @@ from msvcrt import getch as get_char
 from os import system
 from random import shuffle
 from time import sleep
-from types import MappingProxyType
+from typing import Final, List, Literal, Optional, TypedDict, Union, cast
+
+ExitType = Literal['exit']
+MoveType = Literal['w', 'a', 's', 'd']
+FieldType = List[Union[int, str]]
 
 # Empty tile, there's only one empty cell on a field:
-EMPTY_MARK = 'x'
+EMPTY_MARK: Final = 'x'
 
 # Exit from the game
-EXIT_EVENT = 'exit'
+EXIT_EVENT: ExitType = 'exit'
 
 # Field has a size of (FIELD_SIZE x FIELD_SIZE)
-FIELD_SIZE = 4
+FIELD_SIZE: Final = 4
 
 # Dictionary of possible moves if a form of:
 # key -> delta to move the empty tile on a field.
-MOVES = MappingProxyType({
+class Moves(TypedDict):
+    w: int
+    a: int
+    s: int
+    d: int
+
+MOVES: Moves = {
     'w': -FIELD_SIZE,
     's': FIELD_SIZE,
     'a': -1,
     'd': 1,
-})
+}
 
-
-def _sign(permutation):
+def _sign(permutation: List) -> Union[Literal[-1], Literal[1]]:
     inverses = sum(
         first_value > second_value
         for index, first_value in enumerate(permutation)
@@ -35,14 +44,14 @@ def _sign(permutation):
     return 1 if inverses % 2 == 0 else -1
 
 
-def shuffle_field():
+def shuffle_field() -> FieldType:
     """Create a field at the very start of the game.
 
     Returns:
         list with FIELD_SIZE ** 2 randomly shuffled tiles,
         one of which is a empty space.
     """
-    field = list(range(1, FIELD_SIZE ** 2))
+    field: FieldType = list(range(1, FIELD_SIZE ** 2))
     shuffle(field)
 
     if _sign(field) == -1:  # impossible to solve
@@ -53,7 +62,7 @@ def shuffle_field():
     return field
 
 
-def print_field(field):
+def print_field(field: FieldType):
     """Print field to user.
 
     Args:
@@ -67,7 +76,7 @@ def print_field(field):
             print()
 
 
-def is_game_finished(field):
+def is_game_finished(field: FieldType) -> bool:
     """Check if the game is finished.
 
     Args:
@@ -76,12 +85,12 @@ def is_game_finished(field):
     Returns:
         True if the game is finished, False otherwise.
     """
-    initial_field = list(range(1, FIELD_SIZE ** 2))
+    initial_field: FieldType = list(range(1, FIELD_SIZE ** 2))
     initial_field.append(EMPTY_MARK)
     return field == initial_field
 
 
-def perform_move(field, key):
+def perform_move(field: FieldType, key: MoveType) -> Optional[FieldType]:
     """Move empty-tile inside the field.
 
     Args:
@@ -92,7 +101,7 @@ def perform_move(field, key):
         new field state (after the move)
         or `None` if the move can't me done.
     """
-    def _validate_move(index):
+    def _validate_move(index: int) -> bool:
         return 0 <= index < len(field) \
             and not (key == 'd' and index % FIELD_SIZE == 0) \
             and not (key == 'a' and index % FIELD_SIZE == FIELD_SIZE - 1)
@@ -103,9 +112,10 @@ def perform_move(field, key):
         field[current_index], field[target_index] = \
             field[target_index], field[current_index]
         return field
+    return None
 
 
-def handle_user_input():
+def handle_user_input() -> Union[MoveType, ExitType, None]:
     """Handle user input.
 
     List of accepted moves:
@@ -124,9 +134,10 @@ def handle_user_input():
         return None
 
     if move in MOVES.keys():
-        return move
+        return cast(MoveType, move)
     elif move == '\x03':  # Ctrl+C
         return EXIT_EVENT
+    return None
 
 
 def main():
