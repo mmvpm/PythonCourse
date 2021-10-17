@@ -1,4 +1,4 @@
-"""Models."""
+"""User model."""
 
 
 class User(object):
