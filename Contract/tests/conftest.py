@@ -7,9 +7,5 @@ sys.path.append(BASE_DIR)
 
 
 @pytest.fixture(scope='session')
-def dataset():
-    return [
-        (1.2, 2.3),
-        (3.4, 4.5),
-        (5.6, 6.7),
-    ]
+def add_two_numbers():
+    return lambda first, second: first + int(second)

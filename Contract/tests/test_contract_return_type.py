@@ -1,42 +1,22 @@
-from contract import *
+import pytest
+
+from contract import Any
+from contract import contract
+from contract import ContractError
 
 
-def test_return_type_happy_path():
-
-    @contract(return_type=float)
-    def add_two_numbers(first, second):
-        return first + second
-
-    add_two_numbers(1, 2.0)
+def test_return_type_happy_path(add_two_numbers):
+    contract(return_type=float)(add_two_numbers)(1.0, 2)
 
 
-def test_return_type_failed():
-
-    @contract(return_type=float)
-    def add_two_numbers(first, second):
-        return first + second  # int
-
-    try:
-        add_two_numbers(1, 2)
-    except ContractError:
-        pass  # ok
-    except Exception:
-        assert False
+def test_return_type_failed(add_two_numbers):
+    with pytest.raises(ContractError):
+        contract(return_type=float)(add_two_numbers)(1, 2)
 
 
-def test_return_type_any():
-
-    @contract(return_type=Any)
-    def add_two_numbers(first, second):
-        return first + second
-
-    add_two_numbers(1, 2.0)
+def test_return_type_any(add_two_numbers):
+    contract(return_type=Any)(add_two_numbers)(1, 2.0)
 
 
-def test_return_type_none():
-
-    @contract(return_type=None)
-    def add_two_numbers(first, second):
-        return first + second
-
-    add_two_numbers(1, 2.0)
+def test_return_type_none(add_two_numbers):
+    contract(return_type=None)(add_two_numbers)(1, 2.0)
