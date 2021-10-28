@@ -1,3 +1,5 @@
+import pytest
+import random
 from contract import *
 
 
@@ -44,7 +46,7 @@ def test_arg_types_wrong_any():
     except ContractError:
         pass # ok
     except Exception:
-        assert False
+        pytest.fail()
 
 
 def test_arg_types_none():
@@ -54,3 +56,42 @@ def test_arg_types_none():
         return first + second
     
     add_two_numbers(1, 2.0)
+
+
+@pytest.mark.timeout(10)
+def test_arg_types_random_numbers():
+    
+    @contract(arg_types=(int, float))
+    def add_two_numbers(first, second):
+        return first + second
+    
+    first_number = random.randint(0, 5)
+    second_number = random.random()
+    add_two_numbers(first_number, second_number)
+
+
+@pytest.mark.parametrize(
+    'first_number', 
+    [1, 2, 3, 5, 8, 13]
+)
+@pytest.mark.parametrize(
+    'second_number', 
+    [0, 1, 2, 3, 5, 8]
+)
+def test_arg_types_special_numbers(first_number, second_number):
+    
+    @contract(arg_types=(int, int))
+    def add_two_numbers(first, second):
+        return first + second
+
+    add_two_numbers(first_number, second_number)
+
+
+def test_arg_types_dataset(dataset):
+    
+    @contract(arg_types=(float, float))
+    def add_two_numbers(first, second):
+        return first + second
+
+    for test_case in dataset:
+        add_two_numbers(*test_case)

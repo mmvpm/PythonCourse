@@ -38,7 +38,7 @@ def contract(arg_types=None, return_type=None, raises=None):
                 raise ContractError(
                     f'Wrong argument types: expected = {arg_types}, but actual = {actual_arg_types}'
                 )
-        
+
         def validate_return_type(actual_return_type):
             if return_type is None:
                 return
@@ -46,7 +46,7 @@ def contract(arg_types=None, return_type=None, raises=None):
                 raise ContractError(
                     f'Wrong return type: expected = {return_type}, but actual = {actual_return_type}'
                 )
-        
+
         def validate_raises(code):
             if raises is not None:
                 try:
@@ -57,18 +57,18 @@ def contract(arg_types=None, return_type=None, raises=None):
                     raise ContractError('Unexpected error') from ex
             else:
                 result = code()
-            
+
             return result, type(result)
 
         def wrapper(*args):
             actual_arg_types = tuple(map(type, args))
             validate_arg_types(actual_arg_types)
-            
+
             result, actual_return_type = validate_raises(lambda: function(*args))
             validate_return_type(actual_return_type)
-            
+
             return result
-        
+
         return wrapper
-    
+
     return decorator
