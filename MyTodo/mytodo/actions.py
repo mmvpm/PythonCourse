@@ -1,4 +1,4 @@
-"""Actions."""
+"""Console commands."""
 
 from typing import final
 

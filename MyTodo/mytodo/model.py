@@ -1,4 +1,4 @@
-"""Models."""
+"""Task representation."""
 
 
 from typing import final

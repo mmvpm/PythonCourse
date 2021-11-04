@@ -1,4 +1,4 @@
-"""Storage implementation."""
+"""Json storage implementation."""
 
 import json
 from os import path
