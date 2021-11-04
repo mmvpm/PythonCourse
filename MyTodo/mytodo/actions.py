@@ -1,5 +1,7 @@
 """Actions."""
 
+from typing import final
+
 from mytodo.model import Task
 from mytodo.storage import Storage
 
@@ -16,6 +18,7 @@ class BaseAction(object):
         raise NotImplementedError()
 
 
+@final
 class ActionAdd(BaseAction):
     """Action: add 'title' 'description'."""
 
@@ -32,6 +35,7 @@ class ActionAdd(BaseAction):
         storage.add(self.task)
 
 
+@final
 class ActionShow(BaseAction):
     """Action: show <int>."""
 
@@ -49,6 +53,7 @@ class ActionShow(BaseAction):
             print(task)
 
 
+@final
 class ActionDone(BaseAction):
     """Action: done <int>."""
 
@@ -64,6 +69,7 @@ class ActionDone(BaseAction):
         storage.done(self.task_index)
 
 
+@final
 class ActionFind(BaseAction):
     """Action: find 'text'."""
 

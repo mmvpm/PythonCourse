@@ -1,6 +1,10 @@
 """Models."""
 
 
+from typing import final
+
+
+@final
 class Task(object):
     """Task(title, description)."""
 

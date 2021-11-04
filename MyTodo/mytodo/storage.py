@@ -2,11 +2,12 @@
 
 import json
 from os import path
-from typing import Optional
+from typing import Optional, final
 
 from mytodo.model import Task
 
 
+@final
 class Storage(object):
     """Json-file storage."""
 
