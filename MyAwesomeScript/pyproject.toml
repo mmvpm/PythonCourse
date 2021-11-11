@@ -5,7 +5,7 @@ description = "Simple console application"
 authors = ["IdeaSeeker <stroganov.n.36@gmail.com>"]
 
 [tool.poetry.scripts]
-my-awesome-script = "my_awesome_script.command_line:main"
+my-awesome-script = "myawesomescript.command_line:main"
 
 [tool.poetry.dependencies]
 python = "^3.9"
