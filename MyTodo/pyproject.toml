@@ -1,8 +1,11 @@
 [tool.poetry]
-name = "MyTodo"
+name = "my-todo"
 version = "0.1.0"
 description = ""
 authors = ["IdeaSeeker <stroganov.n.36@gmail.com>"]
+
+[tool.poetry.scripts]
+my-todo = "mytodo.command_line:main"
 
 [tool.poetry.dependencies]
 python = "^3.9"
